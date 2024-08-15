@@ -1,0 +1,21 @@
+{
+  "name": "tdh-draft-bot",
+  "version": "1.0.0",
+  "description": "TeamGradins Drafting Hub Draft Bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tdh-draft-bot"
+  },
+  "author": "Lynnaner",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.15.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.0"
+  }
+}
