@@ -2,7 +2,7 @@
   "name": "tdh-draft-bot",
   "version": "1.0.0",
   "description": "TeamGradins Drafting Hub Draft Bot",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "node .",
     "lint": "elsint .",
