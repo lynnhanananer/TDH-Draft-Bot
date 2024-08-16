@@ -1,4 +1,5 @@
 const { Events, Collection } = require('discord.js')
+const { isMatchmaker } = require('../util/memberUtils');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -12,6 +13,12 @@ module.exports = {
                 `No command matching ${interaction.commandName} was found.`
             )
             return
+        }
+        
+        // verify the role of the member running the command
+        if (command.requiredRole === 'matchmaker' && !isMatchmaker(interaction.member)) {
+            await interaction.reply({ ephemeral: true , content: 'You do not have the required roles to run this command'});
+            return;
         }
 
         const { cooldowns } = interaction.client

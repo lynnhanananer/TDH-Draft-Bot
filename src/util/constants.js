@@ -5,6 +5,7 @@ const constants = {
         { name: 'Division 3', value: 'divison3' },
         { name: 'Division 4', value: 'divison4' },
     ],
+    matchmakerRoles: ['tdh admin', 'tdh moderator', 'tdh draftoperator']
 }
 
 module.exports = { constants }

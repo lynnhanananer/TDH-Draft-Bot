@@ -1,7 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js')
-const wait = require('node:timers/promises').setTimeout
-const { getMemberDivision } = require('../../util/memberUtils')
-const { constants } = require('../../util/constants')
+const { SlashCommandBuilder } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
+const { getMemberDivision } = require('../../util/memberUtils');
+const { globalEphemeral } = require('../../../config.json');
+const { constants } = require('../../util/constants');
 
 /**
  * command name: getdivison
@@ -21,18 +22,18 @@ module.exports = {
         .addStringOption((option) =>
             option
                 .setName('division')
-                .setDescription('The division')
+                .setDescription('(Optional) Get the rankings for a specific division')
                 .addChoices(constants.divisionMap)
         ),
     async execute(interaction) {
         const division =
             interaction.options.getString('division') ??
-            getMemberDivision(interaction.member)
-        await interaction.deferReply({ ephemeral: true })
-        await wait(4_000)
+            getMemberDivision(interaction.member);
+
+        await interaction.deferReply({ ephemeral: globalEphemeral ?? true });
         await interaction.editReply({
             content: `Returns formatted message with the ratings and rankings of a single division: ${division}`,
-            ephemeral: true,
-        })
+            ephemeral: globalEphemeral ?? true,
+        });
     },
 }

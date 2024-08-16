@@ -10,19 +10,19 @@ const { globalEphemeral } = require('../../../config.json')
 const wait = require('node:timers/promises').setTimeout
 
 /**
- * command name: getdivison
- * category: ranking
- * description: Gets the ratings and rankings of a single division
+ * command name: completematches
+ * category: matchmaking
+ * description: Completes the matchmaking for the current week
  * options: select from divisions
- * response: returns formatted message with the ratings and rankings of a single division
+ * response: returns formatted message with the updated ratings for each division or the specified division
  */
 module.exports = {
     cooldown: 5,
     requiredRole: 'matchmaker',
     category: 'matchmaking',
     data: new SlashCommandBuilder()
-        .setName('creatematches')
-        .setDescription('Creates this weeks matches')
+        .setName('completematches')
+        .setDescription('Completes this weeks matches')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
         .addStringOption((option) =>
             option
@@ -35,13 +35,13 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: globalEphemeral ?? true });
 
-        // TODO: add an api call to verify matches are completed
-        const matchesCompleted = true;
+        // TODO: verify that the matches have been created
+        const matchesCreated = true;
 
-        if (matchesCompleted) {
+        if (matchesCreated) {
             const confirm = new ButtonBuilder()
                 .setCustomId('confirm')
-                .setLabel('Create matches?')
+                .setLabel('Complete matches?')
                 .setStyle(ButtonStyle.Primary)
 
             const cancel = new ButtonBuilder()
@@ -51,10 +51,11 @@ module.exports = {
             const row = new ActionRowBuilder().addComponents(confirm, cancel)
 
             const response = await interaction.followUp({
-                content: 'Create this weeks matches?',
+                content: 'Complete this weeks matches?',
                 ephemeral: globalEphemeral ?? true,
                 components: [row],
             })
+
             const collectorFilter = (i) => i.user.id === interaction.user.id
 
             try {
@@ -65,20 +66,21 @@ module.exports = {
 
                 if (confirmation.customId === 'confirm') {
                     await confirmation.update({
-                        content: 'Creating matches...',
-                        ephemeral: true,
+                        content: 'Completing matches...',
+                        ephemeral: globalEphemeral ?? true,
                         components: [],
                     })
 
-                    // TODO: add the sheets API call to create the matches for the current week
+                    // TODO: add sheets API call to complete matches
 
                     await interaction.followUp({
-                        content: 'Matches created.',
-                        ephemeral: true,
+                        content: 'Matches completed.',
+                        ephemeral: globalEphemeral ?? true,
                     })
                     await interaction.followUp({
-                        content: 'TODO: output matches for each division',
-                        ephemeral: true,
+                        content:
+                            'TODO: output each divisions new rankings and player ratings',
+                        ephemeral: globalEphemeral ?? true,
                     })
                 }
                 if (confirmation.customId === 'cancel') {
@@ -89,6 +91,7 @@ module.exports = {
                     })
                 }
             } catch (e) {
+                console.log(e)
                 await interaction.editReply({
                     content:
                         'Confirmation not received within 1 minute, cancelling',
@@ -96,8 +99,9 @@ module.exports = {
                     ephemeral: globalEphemeral ?? true,
                 })
             }
-        } else {
-            await interaction.followUp({ ephemeral: globalEphemeral ?? true , content: 'The current matches have not been completed.\nRun **/completematches** command to complete the matches'})
+        }
+        else {
+            await interaction.followUp({ ephemeral: globalEphemeral ?? true , content: 'The current matches have not been created.\nRun **/creatematches** command to create the matches'})
         }
     },
 }

@@ -17,6 +17,5 @@ module.exports = {
         await interaction.reply(
             'Returns formatted message with the ratings and rankings of all divisions'
         )
-        const message = await interaction.fetchReply()
     },
 }

@@ -17,15 +17,15 @@ module.exports = {
         .addUserOption((option) =>
             option
                 .setName('user')
-                .setDescription('The member to get the rating for')
+                .setDescription('(Optional) Get the rating for a specific user')
         ),
     async execute(interaction) {
         const username =
             interaction.options.getUser('user')?.username ??
             interaction.user.username
         await interaction.reply({
-            content: `Returns formatted message with elo rating and division ranking for ${username}`,
-            ephemeral: true,
+            content: `Returns formatted message with rating and division ranking for ${username}`,
+            ephemeral: globalEphemeral ?? true,
         })
     },
 }
