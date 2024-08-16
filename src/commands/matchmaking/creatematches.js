@@ -7,7 +7,6 @@ const {
 } = require('discord.js')
 const { constants } = require('../../util/constants')
 const { globalEphemeral } = require('../../../config.json')
-const wait = require('node:timers/promises').setTimeout
 
 /**
  * command name: getdivison

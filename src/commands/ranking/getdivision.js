@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
 const { getMemberDivision } = require('../../util/memberUtils');
 const { globalEphemeral } = require('../../../config.json');
 const { constants } = require('../../util/constants');
